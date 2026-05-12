@@ -1,0 +1,4 @@
+# Dependências do projeto Controle de Estoque RAD
+# Instale com: pip install -r requirements.txt
+
+Faker==37.1.0    # Geração de dados fictícios para testes
