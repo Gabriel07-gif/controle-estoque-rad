@@ -85,10 +85,10 @@ git push origin feat/banco   # Substitua pelo nome da sua branch
 Para evitar conflitos, sigam esta ordem:
 
 ```
-1º  feat/banco      → main   (Pessoa 1 - banco de dados)
-2º  feat/utils      → main   (Pessoa 3 - logs e validações)
-3º  feat/interface  → main   (Pessoa 2 - interface gráfica)
-4º  feat/integracao → main   (Pessoa 4 - integração final)
+1º  feat/banco      → main   (Victoria - banco de dados)
+2º  feat/utils      → main   (Juan - logs e validações)
+3º  feat/interface  → main   (Paulo - interface gráfica)
+4º  feat/integracao → main   (Gabriel - integração final)
 ```
 
 As Pessoas 1 e 3 podem trabalhar ao mesmo tempo porque mexem em arquivos diferentes.
