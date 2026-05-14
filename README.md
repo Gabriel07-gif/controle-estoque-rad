@@ -1,21 +1,21 @@
-# 📦 Mini Sistema de Controle de Estoque (RAD)
+# Mini Sistema de Controle de Estoque (RAD)
 
 Sistema desktop com interface gráfica para gerenciamento de estoque, desenvolvido com Python, tkinter e SQLite seguindo a metodologia de Desenvolvimento Rápido de Aplicações (RAD).
 
 ---
 
-## 🎯 Sobre o projeto
+## Sobre o projeto
 
 Uma aplicação de tela única que permite cadastrar, visualizar, editar e excluir produtos do estoque de uma loja, com log de auditoria persistente em arquivo `.txt` e banco de dados relacional SQLite.
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 - **Python 3.10+**
 - **tkinter** — Interface gráfica (GUI)
 - **SQLite3** — Banco de dados relacional
 - **Faker** — Geração de dados fictícios para testes
 
-## 📁 Estrutura do projeto
+## Estrutura do projeto
 
 ```
 controle-estoque-rad/
@@ -34,7 +34,7 @@ controle-estoque-rad/
 └── README.md              # Este arquivo
 ```
 
-## 🚀 Como rodar o projeto
+## Como rodar o projeto
 
 ### 1. Clone o repositório
 
@@ -56,7 +56,7 @@ cd src
 python main.py
 ```
 
-## 👥 Divisão da equipe
+## Divisão da equipe
 
 | Membro     | Responsabilidade         | Arquivo principal | Branch            |
 |------------|--------------------------|-------------------|-------------------|
@@ -67,7 +67,7 @@ python main.py
 
 > Consulte o arquivo [contribuirgithub.md](contribuirgithub.md) para ver o fluxo de trabalho com Git.
 
-## 📋 Funcionalidades
+## Funcionalidades
 
 - [x] **Create** — Cadastrar produto com nome, quantidade e preço
 - [x] **Read** — Listar todos os produtos em uma tabela (Treeview)
@@ -76,7 +76,7 @@ python main.py
 - [x] **Log de auditoria** — Registro de todas as operações em `log_estoque.txt`
 - [x] **Validação de dados** — Tratamento de erros com `try/except`
 
-## 📄 Formato do log
+## Formato do log
 
 ```
 [12/05/2026 14:30:15] INSERÇÃO - Produto "Monitor" (Qtd: 10) cadastrado com sucesso.
@@ -84,6 +84,6 @@ python main.py
 [13/05/2026 09:12:30] EXCLUSÃO - Produto "Teclado Mecânico" removido do sistema.
 ```
 
-## 📝 Licença
+## Licença
 
 Projeto acadêmico — uso educacional.
