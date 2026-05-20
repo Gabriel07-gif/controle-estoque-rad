@@ -21,10 +21,14 @@ def registrar_log(tipo: str, mensagem: str):
     Exemplo:
         [05/05/2026 14:30:15] INSERÇÃO - Produto "Monitor" (Qtd: 10) cadastrado com sucesso.
     """
-    # TODO: Pessoa 3 — implementar
-    # Dica: abrir arquivo com modo 'a' (append)
-    # Usar datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
-    pass
+    timestamp = datetime.now().strftime("[%d/%m/%Y %H:%M:%S]")
+    linha = f"{timestamp} {tipo} - {mensagem}\n"
+    try:
+        with open(ARQUIVO_LOG, "a", encoding="utf-8") as f:
+            f.write(linha)
+    except Exception:
+        # Não propagar erro de log para a interface
+        pass
 
 
 def validar_nome(nome: str) -> str:
@@ -39,9 +43,12 @@ def validar_nome(nome: str) -> str:
     Raises:
         ValueError: Se o nome estiver vazio após limpeza
     """
-    # TODO: Pessoa 3 — implementar
-    # Dica: usar .strip() para limpar espaços
-    pass
+    if nome is None:
+        raise ValueError("Nome vazio")
+    valor = nome.strip()
+    if not valor:
+        raise ValueError("Nome vazio")
+    return valor
 
 
 def validar_quantidade(qtd: str) -> int:
@@ -56,9 +63,13 @@ def validar_quantidade(qtd: str) -> int:
     Raises:
         ValueError: Se não for um número inteiro válido ou for negativo
     """
-    # TODO: Pessoa 3 — implementar
-    # Dica: usar try/except para capturar erro de conversão
-    pass
+    try:
+        valor = int(qtd)
+    except Exception:
+        raise ValueError("Quantidade deve ser um número inteiro")
+    if valor < 0:
+        raise ValueError("Quantidade não pode ser negativa")
+    return valor
 
 
 def validar_preco(preco: str) -> float:
@@ -73,6 +84,13 @@ def validar_preco(preco: str) -> float:
     Raises:
         ValueError: Se não for um número válido ou for negativo
     """
-    # TODO: Pessoa 3 — implementar
-    # Dica: aceitar tanto "10.50" quanto "10,50" (substituir vírgula por ponto)
-    pass
+    if preco is None:
+        raise ValueError("Preço inválido")
+    texto = preco.replace(",", ".").strip()
+    try:
+        valor = float(texto)
+    except Exception:
+        raise ValueError("Preço deve ser um número")
+    if valor < 0:
+        raise ValueError("Preço não pode ser negativo")
+    return valor

@@ -10,12 +10,22 @@ NOME_BANCO = "estoque.db"
 
 def criar_tabela():
     """Cria a tabela de produtos caso não exista."""
-    # TODO: Pessoa 1 — implementar
-    # Campos sugeridos: id (INTEGER PRIMARY KEY AUTOINCREMENT),
-    #                   nome (TEXT NOT NULL),
-    #                   quantidade (INTEGER NOT NULL),
-    #                   preco (REAL NOT NULL)
-    pass
+    conn = sqlite3.connect(NOME_BANCO)
+    try:
+        cursor = conn.cursor()
+        cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS produtos (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                nome TEXT NOT NULL,
+                quantidade INTEGER NOT NULL,
+                preco REAL NOT NULL
+            )
+            """
+        )
+        conn.commit()
+    finally:
+        conn.close()
 
 
 def inserir_produto(nome: str, quantidade: int, preco: float) -> bool:
@@ -29,8 +39,22 @@ def inserir_produto(nome: str, quantidade: int, preco: float) -> bool:
     Returns:
         True se inserido com sucesso, False caso contrário
     """
-    # TODO: Pessoa 1 — implementar
-    pass
+    try:
+        conn = sqlite3.connect(NOME_BANCO)
+        cursor = conn.cursor()
+        cursor.execute(
+            "INSERT INTO produtos (nome, quantidade, preco) VALUES (?, ?, ?)",
+            (nome, quantidade, preco),
+        )
+        conn.commit()
+        return True
+    except sqlite3.Error:
+        return False
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 def listar_produtos() -> list:
@@ -39,8 +63,19 @@ def listar_produtos() -> list:
     Returns:
         Lista de tuplas (id, nome, quantidade, preco)
     """
-    # TODO: Pessoa 1 — implementar
-    pass
+    try:
+        conn = sqlite3.connect(NOME_BANCO)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, nome, quantidade, preco FROM produtos")
+        rows = cursor.fetchall()
+        return rows
+    except sqlite3.Error:
+        return []
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 def atualizar_produto(id: int, nome: str, quantidade: int, preco: float) -> bool:
@@ -55,8 +90,22 @@ def atualizar_produto(id: int, nome: str, quantidade: int, preco: float) -> bool
     Returns:
         True se atualizado com sucesso, False caso contrário
     """
-    # TODO: Pessoa 1 — implementar
-    pass
+    try:
+        conn = sqlite3.connect(NOME_BANCO)
+        cursor = conn.cursor()
+        cursor.execute(
+            "UPDATE produtos SET nome = ?, quantidade = ?, preco = ? WHERE id = ?",
+            (nome, quantidade, preco, id),
+        )
+        conn.commit()
+        return cursor.rowcount > 0
+    except sqlite3.Error:
+        return False
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 def deletar_produto(id: int) -> bool:
@@ -68,8 +117,19 @@ def deletar_produto(id: int) -> bool:
     Returns:
         True se removido com sucesso, False caso contrário
     """
-    # TODO: Pessoa 1 — implementar
-    pass
+    try:
+        conn = sqlite3.connect(NOME_BANCO)
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM produtos WHERE id = ?", (id,))
+        conn.commit()
+        return cursor.rowcount > 0
+    except sqlite3.Error:
+        return False
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
 
 
 def popular_dados_teste(n: int = 10):
@@ -78,7 +138,29 @@ def popular_dados_teste(n: int = 10):
     Args:
         n: Número de produtos a gerar (padrão: 10)
     """
-    # TODO: Pessoa 1 — implementar com Faker
-    # from faker import Faker
-    # fake = Faker('pt_BR')
-    pass
+    try:
+        from faker import Faker
+
+        fake = Faker("pt_BR")
+        categorias = ["Geral"]
+        conn = sqlite3.connect(NOME_BANCO)
+        cursor = conn.cursor()
+        cursor.execute("SELECT COUNT(*) FROM produtos")
+        total = cursor.fetchone()[0]
+        if total == 0:
+            for _ in range(n):
+                nome = fake.word().capitalize()
+                quantidade = fake.random_int(min=1, max=100)
+                preco = round(fake.random_number(digits=3) / 10, 2)
+                cursor.execute(
+                    "INSERT INTO produtos (nome, quantidade, preco) VALUES (?, ?, ?)",
+                    (nome, quantidade, preco),
+                )
+            conn.commit()
+    except Exception:
+        pass
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
