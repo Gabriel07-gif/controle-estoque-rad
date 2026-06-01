@@ -19,18 +19,19 @@ Uma aplicação de tela única que permite cadastrar, visualizar, editar e exclu
 
 ```
 controle-estoque-rad/
-├── src/
-│   ├── principal.py            # Arquivo principal (integração)
+├── etapas/
+│   ├── principal.py       # Arquivo principal (integração)
 │   ├── banco.py           # Conexão e operações no banco de dados
 │   ├── interface.py       # Interface gráfica com tkinter
-│   └── logs.py           # Logs de auditoria e validações
+│   └── utils.py           # Logs de auditoria e validações
 ├── relatorio/
 │   └── relatorio_rad.pdf  # Relatório da metodologia RAD
 ├── estoque.db             # Banco de dados SQLite (gerado na execução)
 ├── log_estoque.txt        # Log de auditoria (gerado na execução)
 ├── requirements.txt       # Dependências do projeto
+├── run.bat                # Script de execução no Windows
 ├── .gitignore             # Arquivos ignorados pelo Git
-├── contribuirgithub.md        # Guia de contribuição da equipe
+├── contribuirgithub.md    # Guia de contribuição da equipe
 └── README.md              # Este arquivo
 ```
 
@@ -57,12 +58,12 @@ python etapas/principal.py
 
 ## Divisão da equipe
 
-| Membro     | Responsabilidade         | Arquivo principal | Branch            |
-|------------|--------------------------|-------------------|-------------------|
-| Victoria   | Banco de dados + CRUD    | `src/banco.py`    | `feat/banco`      |
-|   Paulo    | Interface gráfica        | `src/interface.py`| `feat/interface`  |
-|   Juan     | Logs + Validações        | `src/utils.py`    | `feat/utils`      |
-|   Gabriel  | Integração + Relatório   | `src/main.py`     | `feat/integracao` |
+| Membro     | Responsabilidade         | Arquivo principal        | Branch            |
+|------------|--------------------------|--------------------------|-------------------|
+| Victoria   | Banco de dados + CRUD    | `etapas/banco.py`        | `feat/banco`      |
+| Paulo      | Interface gráfica        | `etapas/interface.py`    | `feat/interface`  |
+| Juan       | Logs + Validações        | `etapas/utils.py`        | `feat/utils`      |
+| Gabriel    | Integração + Relatório   | `etapas/principal.py`    | `feat/integracao` |
 
 > Consulte o arquivo [contribuirgithub.md](contribuirgithub.md) para ver o fluxo de trabalho com Git.
 

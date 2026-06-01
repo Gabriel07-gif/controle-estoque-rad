@@ -108,6 +108,26 @@ def atualizar_produto(id: int, nome: str, quantidade: int, preco: float) -> bool
             pass
 
 
+def buscar_produto(id: int):
+    """Retorna os dados de um produto pelo ID.
+
+    Returns:
+        Tupla (id, nome, quantidade, preco) ou None se não encontrado
+    """
+    try:
+        conn = sqlite3.connect(NOME_BANCO)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, nome, quantidade, preco FROM produtos WHERE id = ?", (id,))
+        return cursor.fetchone()
+    except sqlite3.Error:
+        return None
+    finally:
+        try:
+            conn.close()
+        except Exception:
+            pass
+
+
 def deletar_produto(id: int) -> bool:
     """Remove um produto do banco de dados.
     

@@ -1,5 +1,5 @@
 """
-main.py — Arquivo principal do sistema (Gabriel)
+principal.py — Arquivo principal do sistema (Gabriel)
 Responsável por integrar banco.py, interface.py e utils.py.
 """
 
@@ -69,7 +69,7 @@ def acao_atualizar():
 
         ok = banco.atualizar_produto(prod_id, nome, quantidade, preco)
         if ok:
-            utils.registrar_log("ATUALIZAÇÃO", f'Produto ID {prod_id} atualizado para "{nome}" (Qtd: {quantidade}).')
+            utils.registrar_log("ATUALIZAÇÃO", f'Produto "{nome}" alterado (Nova Qtd: {quantidade}, Novo Preço: {preco:.2f}).')
             interface.atualizar_treeview()
             interface.limpar_campos()
             messagebox.showinfo("Sucesso", "Produto atualizado com sucesso.")
@@ -100,9 +100,12 @@ def acao_excluir():
         if not ok:
             return
 
+        produto = banco.buscar_produto(prod_id)
+        nome_produto = produto[1] if produto else f"ID {prod_id}"
+
         sucesso = banco.deletar_produto(prod_id)
         if sucesso:
-            utils.registrar_log("EXCLUSÃO", f'Produto ID {prod_id} removido.')
+            utils.registrar_log("EXCLUSÃO", f'Produto "{nome_produto}" removido do sistema.')
             interface.atualizar_treeview()
             interface.limpar_campos()
             messagebox.showinfo("Sucesso", "Produto excluído com sucesso.")
@@ -126,8 +129,6 @@ def main():
     # Montar a interface
     interface.criar_interface(root)
 
-    # TODO: Pessoa 4 — conectar os botões às funções acima
-    # Exemplo: interface.btn_cadastrar.config(command=acao_cadastrar)
     interface.btn_cadastrar.config(command=acao_cadastrar)
     interface.btn_atualizar.config(command=acao_atualizar)
     interface.btn_excluir.config(command=acao_excluir)

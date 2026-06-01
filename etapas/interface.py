@@ -33,8 +33,6 @@ def criar_interface(root):
     - Frame central: botões Cadastrar, Atualizar, Excluir, Limpar
     - Frame inferior: Treeview com colunas (ID, Nome, Quantidade, Preço)
     """
-    # TODO: Pessoa 2 — implementar
-    # Lembre-se: TELA ÚNICA, sem Toplevel
     global entry_nome, entry_quantidade, entry_preco, tree
     global btn_cadastrar, btn_atualizar, btn_excluir, btn_limpar
 
