@@ -18,6 +18,8 @@ btn_cadastrar = None
 btn_atualizar = None
 btn_excluir = None
 btn_limpar = None
+status_label = None
+search_var = None
 
 
 def criar_interface(root):
@@ -53,6 +55,17 @@ def criar_interface(root):
     entry_preco.grid(row=2, column=1, sticky=tk.EW, pady=2)
 
     frame_top.columnconfigure(1, weight=1)
+
+    # Campo de busca
+    search_frame = ttk.Frame(root, padding=(10, 0, 10, 0))
+    search_frame.pack(fill=tk.X)
+    ttk.Label(search_frame, text="Buscar:").pack(side=tk.LEFT)
+    global search_var
+    search_var = tk.StringVar()
+    search_entry = ttk.Entry(search_frame, textvariable=search_var)
+    search_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(5, 5))
+    btn_buscar = ttk.Button(search_frame, text="Pesquisar", command=buscar_produtos)
+    btn_buscar.pack(side=tk.LEFT)
 
     # Frame central: botões
     frame_mid = ttk.Frame(root, padding=10)
@@ -92,6 +105,20 @@ def criar_interface(root):
     tree.pack(fill=tk.BOTH, expand=True)
 
     tree.bind("<<TreeviewSelect>>", preencher_formulario)
+
+    # Barra de status
+    global status_label
+    status_label = ttk.Label(root, text="0 produtos", anchor=tk.W)
+    status_label.pack(fill=tk.X, side=tk.BOTTOM)
+
+    # Menu simples
+    menubar = tk.Menu(root)
+    root.config(menu=menubar)
+    arquivo_menu = tk.Menu(menubar, tearoff=0)
+    arquivo_menu.add_command(label="Popular dados de teste", command=popular_dados_teste)
+    arquivo_menu.add_separator()
+    arquivo_menu.add_command(label="Sair", command=root.quit)
+    menubar.add_cascade(label="Arquivo", menu=arquivo_menu)
 
 
 
@@ -145,9 +172,40 @@ def atualizar_treeview():
     for r in tree.get_children():
         tree.delete(r)
     try:
+        filtro = None
+        try:
+            filtro = search_var.get().strip()
+        except Exception:
+            filtro = None
         rows = banco.listar_produtos()
+        count = 0
         for row in rows:
             # row = (id, nome, quantidade, preco)
-            tree.insert("", tk.END, values=(row[0], row[1], row[2], row[3]))
+            if filtro:
+                if filtro.lower() not in str(row[1]).lower():
+                    continue
+            preco = row[3]
+            try:
+                preco_str = f"{float(preco):.2f}".replace('.', ',')
+            except Exception:
+                preco_str = str(preco)
+            tree.insert("", tk.END, values=(row[0], row[1], row[2], preco_str))
+            count += 1
+        try:
+            status_label.config(text=f"{count} produtos")
+        except Exception:
+            pass
     except Exception:
         pass
+
+
+def buscar_produtos():
+    atualizar_treeview()
+
+
+def popular_dados_teste():
+    try:
+        banco.popular_dados_teste()
+    except Exception:
+        pass
+    atualizar_treeview()
