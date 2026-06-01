@@ -52,8 +52,7 @@ pip install -r requirements.txt
 ### 3. Execute a aplicação
 
 ```bash
-cd src
-python main.py
+python etapas/principal.py
 ```
 
 ## Divisão da equipe
