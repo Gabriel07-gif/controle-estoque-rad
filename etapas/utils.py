@@ -1,5 +1,5 @@
 """
-utils.py — Módulo de utilitários
+utils.py — Módulo de utilitários (Juan)
 Responsável pelo log de auditoria e validação de dados.
 """
 
